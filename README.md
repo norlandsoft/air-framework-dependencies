@@ -11,22 +11,24 @@
 | jedis | 7.4.0 |
 | netty-bom | 4.2.12.Final |
 | commons-pool2 | 2.13.1 |
+| commons-dbcp2 | 由 Spring Boot 管理 |
 | commons-lang3 | 3.20.0 |
 | commons-codec | 1.21.0 |
 | gson | 2.13.2 |
+| jakarta.annotation-api | 由 Spring Boot 管理 |
+| spring-boot-starter-jdbc | 由 Spring Boot 管理 |
+| slf4j-api | 由 Spring Boot 管理 |
+| log4j-bom | 由 Spring Boot 管理 |
+| spring-boot-starter-log4j2 | 由 Spring Boot 管理 |
 
 以下库版本由本 BOM 补充管理：
 
 | 库 | 版本 |
 |---|---|
-| commons-collections4 | 4.5.0 |
 | commons-io | 2.22.0 |
-| commons-text | 1.15.0 |
 | guava | 33.6.0-jre |
 | mybatis | 3.5.19 |
 | mybatis-spring | 4.0.0 |
-| mybatis-spring-boot-starter | 4.0.1 |
-| springdoc-openapi-starter-webmvc-ui | 3.0.3 |
 
 ## 使用方式
 
