@@ -49,7 +49,7 @@
             <repositories>
                 <repository>
                     <id>github</id>
-                    <url>https://maven.pkg.github.com/norlandsoft/AirNotes</url>
+                    <url>https://maven.pkg.github.com/norlandsoft/air-framework-dependencies</url>
                 </repository>
             </repositories>
         </profile>
