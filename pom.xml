@@ -1,84 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
+  <groupId>com.norlandsoft</groupId>
+  <artifactId>AirPro</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>Air Pro</name>
+
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.test.skip>true</maven.test.skip>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.clean.plugin>3.4.0</maven.clean.plugin>
+    <maven.compiler.plugin>3.14.1</maven.compiler.plugin>
+    <maven.resources.plugin>3.3.1</maven.resources.plugin>
+    <lombok.version>1.18.42</lombok.version>
+
+    <springboot.version>4.1.0-M4</springboot.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>4.1.0-M4</version>
-        <relativePath/>
-    </parent>
+        <version>${springboot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <groupId>com.norlandsoft</groupId>
-    <artifactId>air-framework-dependencies</artifactId>
-    <version>1.2.0</version>
-    <packaging>pom</packaging>
+  <dependencies>
+    <!--Lombok（provided scope 不会由 framework-sdk 传递，需在此声明）-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
-    <name>Air Framework Dependencies</name>
-    <description>BOM for managing third-party dependency versions across norlandsoft projects</description>
+  <modules>
+    <module>platform</module>
+  </modules>
 
-    <properties>
-        <!-- Apache Commons (not managed by Spring Boot BOM) -->
-        <commons-lang3.version>3.18.2</commons-lang3.version>
-        <commons-io.version>2.22.0</commons-io.version>
+  <repositories>
+    <repository>
+      <id>spring-milestone</id>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/norlandsoft/air-framework-dependencies</url>
+    </repository>
+  </repositories>
 
-        <!-- Google -->
-        <guava.version>33.6.0-jre</guava.version>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.json</include>
+        </includes>
+      </resource>
+    </resources>
 
-        <!-- ORM -->
-        <mybatis.version>3.5.19</mybatis.version>
-        <mybatis-spring.version>4.0.0</mybatis-spring.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- Apache Commons -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-
-            <!-- Google -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-            <!-- MyBatis -->
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-spring</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>spring-milestone</id>
-            <url>https://repo.spring.io/milestone</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/norlandsoft/air-framework-dependencies</url>
-        </repository>
-    </distributionManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${springboot.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven.clean.plugin}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin}</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Xlint:-options</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

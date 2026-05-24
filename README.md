@@ -1,102 +1,34 @@
-# Air Framework Dependencies
+# Air Pro
+> APP平台开发脚手架
 
-统一的第三方依赖版本管理 BOM，供所有 norlandsoft Java 项目引用。
+全栈应用平台开发脚手架，提供完整的前后端框架、认证体系、菜单管理和系统设置功能。
 
-## 已管理版本
+## 技术栈
 
-以下库版本已由 **spring-boot-dependencies 4.1.0-M4** 管理，引入本 BOM 后可直接使用（无需声明 version）：
+- **后端**: Java 21 + Spring Boot 4.1 + MyBatis + PostgreSQL + Redis
+- **前端**: React 18 + TypeScript + UmiJS Max 4 + air-design
 
-| 库 | 版本 |
-|---|---|
-| jedis | 7.4.0 |
-| netty-bom | 4.2.12.Final |
-| commons-pool2 | 2.13.1 |
-| commons-dbcp2 | 由 Spring Boot 管理 |
-| commons-lang3 | 3.20.0 |
-| commons-codec | 1.21.0 |
-| gson | 2.13.2 |
-| jakarta.annotation-api | 由 Spring Boot 管理 |
-| spring-boot-starter-jdbc | 由 Spring Boot 管理 |
-| slf4j-api | 由 Spring Boot 管理 |
-| log4j-bom | 由 Spring Boot 管理 |
-| spring-boot-starter-log4j2 | 由 Spring Boot 管理 |
+## 快速开始
 
-以下库版本由本 BOM 补充管理：
-
-| 库 | 版本 |
-|---|---|
-| commons-io | 2.22.0 |
-| guava | 33.6.0-jre |
-| mybatis | 3.5.19 |
-| mybatis-spring | 4.0.0 |
-
-## 使用方式
-
-### 1. 配置 settings.xml
-
-在 `~/.m2/settings.xml` 中添加 GitHub Packages 仓库和认证：
-
-```xml
-<settings>
-    <servers>
-        <server>
-            <id>github</id>
-            <username>你的GitHub用户名</username>
-            <password>ghp_your_personal_access_token</password>
-        </server>
-    </servers>
-    <profiles>
-        <profile>
-            <id>github</id>
-            <repositories>
-                <repository>
-                    <id>github</id>
-                    <url>https://maven.pkg.github.com/norlandsoft/air-framework-dependencies</url>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>github</activeProfile>
-    </activeProfiles>
-</settings>
-```
-
-### 2. 在项目 pom.xml 中引入 BOM
-
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>com.norlandsoft</groupId>
-            <artifactId>air-framework-dependencies</artifactId>
-            <version>1.0.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-### 3. 正常添加依赖（无需 version）
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>redis.clients</groupId>
-        <artifactId>jedis</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-    </dependency>
-</dependencies>
-```
-
-## 发布新版本
+### 后端
 
 ```bash
-mvn deploy
+cd platform/../
+mvn clean package -DskipTests
+java -jar platform/target/air-pro-platform.jar
 ```
 
-修改版本时只需更改 `pom.xml` 中的 `<properties>` 区域。
+### 前端
+
+```bash
+cd frontend
+npm install
+npm start    # 开发模式，端口 6800
+npm run build  # 生产构建
+```
+
+## 项目结构
+
+- `platform/` - 后端 Spring Boot 应用
+- `frontend/` - 前端 React 应用
+- `docs/rules/` - 编码规范

@@ -1,0 +1,18 @@
+# AirPro Platform
+server:
+  port: 9800
+  tomcat:
+    connection-timeout: 0
+    threads.max: 200
+    max-connections: 10000
+    accept-count: 100
+
+spring:
+  application:
+    name: air-pro-platform
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  jackson:
+    default-property-inclusion: non_null
