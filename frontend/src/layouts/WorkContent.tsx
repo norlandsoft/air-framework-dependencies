@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from "umi";
 
 import Home from "@/pages/Home";
-import Example1 from "@/pages/Example1";
-import Example2 from "@/pages/Example2";
 import SettingsPage from "@/pages/Admin/Settings";
 import Error404 from "./Error404";
 
@@ -28,11 +26,7 @@ const WorkContent: React.FC<any> = props => {
             switch (current.page) {
               case 'menu_home':
                 return <Home/>
-              case 'menu_example1':
-                return <Example1/>
-              case 'menu_example2':
-                return <Example2/>
-              case 'menu_settings':
+              case 'menu_setting':
                 return <SettingsPage/>
               default:
                 return <Error404/>

@@ -22,7 +22,7 @@
     <maven.resources.plugin>3.3.1</maven.resources.plugin>
     <lombok.version>1.18.42</lombok.version>
 
-    <springboot.version>4.1.0-M4</springboot.version>
+    <springboot.version>4.1.0-RC1</springboot.version>
   </properties>
 
   <dependencyManagement>

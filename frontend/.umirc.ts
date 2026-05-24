@@ -21,12 +21,12 @@ export default defineConfig({
 
   proxy: {
     "/ws": {
-      target: "http://localhost:9800",
+      target: "http://localhost:9999",
       changeOrigin: true,
       ws: true,
     },
     "/rest": {
-      target: "http://localhost:9800",
+      target: "http://localhost:9999",
       changeOrigin: true,
       pathRewrite: {"^": ""},
       'onProxyRes': function (proxyRes, req, res) {
@@ -34,17 +34,17 @@ export default defineConfig({
       }
     },
     "/admin": {
-      target: "http://localhost:9800",
+      target: "http://localhost:9999",
       changeOrigin: true,
       pathRewrite: { "^": "" },
     },
     "/initialAdminPassword": {
-      target: "http://localhost:9800",
+      target: "http://localhost:9999",
       changeOrigin: true,
       pathRewrite: { "^": "" },
     },
     "/api": {
-      target: "http://localhost:9800",
+      target: "http://localhost:9999",
       changeOrigin: true,
       'onProxyRes': function (proxyRes, req, res) {
         proxyRes.headers['Content-Encoding'] = 'chunked';

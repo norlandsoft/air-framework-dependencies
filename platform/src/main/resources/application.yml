@@ -1,6 +1,6 @@
 # AirPro Platform
 server:
-  port: 9800
+  port: 9999
   tomcat:
     connection-timeout: 0
     threads.max: 200

@@ -38,4 +38,6 @@ yarn-error.log*
 *.swo
 *~
 
+workspace
+
 package-lock.json
