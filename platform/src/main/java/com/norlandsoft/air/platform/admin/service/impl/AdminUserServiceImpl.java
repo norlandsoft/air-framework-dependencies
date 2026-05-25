@@ -1,6 +1,7 @@
 package com.norlandsoft.air.platform.admin.service.impl;
 
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import com.norlandsoft.air.platform.admin.model.entity.AdminSession;
 import com.norlandsoft.air.platform.admin.model.vo.AdminLoginResponse;
 import com.norlandsoft.air.platform.admin.model.vo.AdminUserInfo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -34,7 +36,7 @@ public class AdminUserServiceImpl implements AdminUserService {
   private static final int SESSION_EXPIRE_SECONDS = 2 * 60 * 60;
   private static final long TOKEN_EXPIRE_MS = 2L * 60 * 60 * 1000;
   private static final String JWT_SECRET = "AirProSecretKeyForJWTSigning2025MustBeChangedInProduction";
-  private static final ObjectMapper MAPPER = new ObjectMapper();
+  private static final ObjectMapper MAPPER = JsonMapper.builder().build();
 
   @Override
   public AdminLoginResponse login(String password) {
@@ -52,8 +54,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     AdminUserInfo user = createAdminUser();
     String token = generateToken(user);
 
-    long now = System.currentTimeMillis();
-    long expireMs = now + TOKEN_EXPIRE_MS;
+    LocalDateTime now = LocalDateTime.now();
     AdminSession session = new AdminSession();
     session.setSessionId(token);
     session.setUserId(ADMIN_USER_ID);
@@ -61,7 +62,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     session.setUserRole(user.getRole());
     session.setCreateTime(now);
     session.setLastAccessTime(now);
-    session.setExpireTime(expireMs);
+    session.setExpireTime(now.plusSeconds(SESSION_EXPIRE_SECONDS));
 
     String sessionJson = MAPPER.writeValueAsString(session);
     EmbeddedStorage.getInstance().put(SESSION_GROUP, TOKEN_KEY_ADMIN, sessionJson);
@@ -101,13 +102,13 @@ public class AdminUserServiceImpl implements AdminUserService {
       if (!token.equals(session.getSessionId())) {
         return null;
       }
-      long now = System.currentTimeMillis();
-      if (session.getExpireTime() < now) {
+      LocalDateTime now = LocalDateTime.now();
+      if (session.getExpireTime().isBefore(now)) {
         return null;
       }
       // 验证通过：滑动过期
       session.setLastAccessTime(now);
-      session.setExpireTime(now + TOKEN_EXPIRE_MS);
+      session.setExpireTime(now.plusSeconds(SESSION_EXPIRE_SECONDS));
       String updatedJson = MAPPER.writeValueAsString(session);
       EmbeddedStorage.getInstance().put(SESSION_GROUP, TOKEN_KEY_ADMIN, updatedJson);
 
